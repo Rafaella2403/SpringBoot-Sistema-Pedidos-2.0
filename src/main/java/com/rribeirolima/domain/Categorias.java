@@ -8,17 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+// A  anotação Entity mostra que essa classe é uma entidade do JPA
 @Entity
 public class Categorias implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	// A  anotação Id indica que esse atributo é o id da tabela
 	@Id
+	// A  anotação GeneratedValue informa que o atributo id é a chave primária
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 
 	public Categorias() {
-		
 	}
 
 	public Categorias(Integer id, String nome) {
