@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 // A  anotação Entity mostra que essa classe é uma entidade do JPA
 @Entity
 public class Categoria implements Serializable {
@@ -22,6 +24,8 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	//Anotação que informa que o jason esta ok e que pode pegar os objetos
+	@JsonManagedReference
 	//Associação da categoria com o produto e iniciando as coleções
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();

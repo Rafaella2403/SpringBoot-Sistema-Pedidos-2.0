@@ -40,7 +40,7 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 		//Adicionado as categorias aos produtos
 		prod1.getCategorias().addAll(Arrays.asList(cat1));
 		prod2.getCategorias().addAll(Arrays.asList(cat1, cat2));
-		prod3.getCategorias().addAll(Arrays.asList(cat2));
+		prod3.getCategorias().addAll(Arrays.asList(cat1));
 		
 		//Salvando os produtos e categorias
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
