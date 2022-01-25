@@ -33,6 +33,8 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 		Produto prod2 = new Produto(null, "Impressora", 800.00);
 		Produto prod3 = new Produto(null, "Mouse", 80.00);
 		
+		
+		
 		//Adicionando os produtos as categorias
 		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
 		cat2.getProdutos().addAll(Arrays.asList(prod2));
