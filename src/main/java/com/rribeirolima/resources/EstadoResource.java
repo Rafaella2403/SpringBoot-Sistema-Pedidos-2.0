@@ -12,7 +12,7 @@ import com.rribeirolima.services.EstadoService;
 
 @RestController
 @RequestMapping(value = "/estados")
-public class EstadoResources {
+public class EstadoResource {
 	
 	@Autowired
 	private EstadoService service;
