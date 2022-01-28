@@ -1,24 +1,30 @@
 package com.rribeirolima;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import com.rribeirolima.domain.Categoria;
 import com.rribeirolima.domain.Cidade;
 import com.rribeirolima.domain.Cliente;
 import com.rribeirolima.domain.Endereco;
 import com.rribeirolima.domain.Estado;
+import com.rribeirolima.domain.Pagamento;
+import com.rribeirolima.domain.PagamentoComBoleto;
+import com.rribeirolima.domain.PagamentoComCartao;
+import com.rribeirolima.domain.Pedido;
 import com.rribeirolima.domain.Produto;
+import com.rribeirolima.domain.enums.EstadoPagamento;
 import com.rribeirolima.domain.enums.TipoCliente;
 import com.rribeirolima.repositories.CategoriaRepository;
 import com.rribeirolima.repositories.CidadeRepository;
 import com.rribeirolima.repositories.ClienteRepository;
 import com.rribeirolima.repositories.EnderecoRepository;
 import com.rribeirolima.repositories.EstadoRepository;
+import com.rribeirolima.repositories.PagamentoRepository;
+import com.rribeirolima.repositories.PedidoRepository;
 import com.rribeirolima.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +42,10 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ImplementandoModeloConceitualApplication.class, args);
@@ -43,6 +53,8 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		//O id esta nulo por que é o banco de dados que vai gerar o id
 		Categoria cat1 = new Categoria(null, "Informatica");
@@ -65,6 +77,14 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cliente1, cid1);
 		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cliente1, cid2);
 		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017  10:32"), cliente1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017  19:35"), cliente1, end2);
+		
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pag1);
+		
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pag2);
 		
 				
 		//Adicionando os produtos as categorias
@@ -83,6 +103,9 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 		//Adicionando os enderecos ao cliente
 		cliente1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		
+		//Adicionando o cliente ao pedido
+		cliente1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
 		//Quando for salvar tem que seguir a ordem. Primeiro os independentes
 		//Salvando os produtos e categorias
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
@@ -95,6 +118,10 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 		//Salvando cliente e endereços
 		clienteRepository.saveAll(Arrays.asList(cliente1));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		
+		//Salvando pedido e pagamento
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
 		
 	}
 

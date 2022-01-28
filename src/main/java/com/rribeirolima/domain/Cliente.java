@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rribeirolima.domain.enums.TipoCliente;
 
@@ -29,6 +28,10 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
+	
+	@OneToMany
+	@JoinColumn(name="cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
@@ -106,6 +109,14 @@ public class Cliente implements Serializable {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
