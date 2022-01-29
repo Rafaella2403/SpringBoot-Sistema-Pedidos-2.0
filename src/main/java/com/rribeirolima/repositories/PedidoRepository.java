@@ -2,8 +2,9 @@ package com.rribeirolima.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.rribeirolima.domain.Pedido;
 
 @Repository
-public interface PedidoRepository extends JpaRepository<PedidoRepository, Integer>{
+public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
 
 }
