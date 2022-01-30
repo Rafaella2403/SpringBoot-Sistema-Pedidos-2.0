@@ -1,9 +1,7 @@
 package com.rribeirolima.domain;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rribeirolima.domain.enums.EstadoPagamento;
 

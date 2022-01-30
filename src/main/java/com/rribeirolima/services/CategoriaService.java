@@ -26,4 +26,11 @@ public class CategoriaService {
 		return obj.orElse(null);
 	}
 	
+	//Criando serviço insert para realizar inserções no banco
+	public Categoria insert(Categoria categoria) {
+		//Operação para garantir que esta sendo inserido um novo objeto
+		categoria.setId(null);
+		return categoriaRepository.save(categoria);
+	}
+	
 }
