@@ -25,7 +25,6 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 	//Anotação que informa que o jason esta ok e que pode pegar os objetos
-	@JsonManagedReference
 	//Associação da categoria com o produto e iniciando as coleções
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();

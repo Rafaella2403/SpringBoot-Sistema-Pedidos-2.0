@@ -12,6 +12,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rribeirolima.domain.enums.EstadoPagamento;
 
 //Mapeando herança 
@@ -25,7 +26,7 @@ public abstract class Pagamento implements Serializable {
 	private Integer estadoPagamento;
 
 	//O ID do pagamento vai ser o mesmo id  do pedido
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId
