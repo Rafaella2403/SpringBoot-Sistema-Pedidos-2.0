@@ -3,21 +3,22 @@ package com.rribeirolima.services;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.rribeirolima.domain.Estado;
-import com.rribeirolima.repositories.EstadoRepository;
+import com.rribeirolima.domain.Pedido;
+import com.rribeirolima.repositories.PedidoRepository;
 import com.rribeirolima.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class EstadoService {
+public class PedidoService {
 
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private PedidoRepository pedidoRepository;
 	
-	public Estado find(Integer id) {
-		Optional<Estado> obj = estadoRepository.findById(id);
+	//Operação capaz de buscar uma categoria por código
+	public Pedido find(Integer id) {
+		Optional<Pedido> obj = pedidoRepository.findById(id);
 		if (obj.isEmpty()) {
 			 throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
-			 + ", Tipo: " + Estado.class.getName());
+			 + ", Tipo: " + Pedido.class.getName());
 		}
 		return obj.orElse(null);
 	}
