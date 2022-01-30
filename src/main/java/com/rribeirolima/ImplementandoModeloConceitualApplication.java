@@ -14,6 +14,7 @@ import com.rribeirolima.domain.Cidade;
 import com.rribeirolima.domain.Cliente;
 import com.rribeirolima.domain.Endereco;
 import com.rribeirolima.domain.Estado;
+import com.rribeirolima.domain.ItemPedido;
 import com.rribeirolima.domain.Pagamento;
 import com.rribeirolima.domain.PagamentoComBoleto;
 import com.rribeirolima.domain.PagamentoComCartao;
@@ -26,6 +27,7 @@ import com.rribeirolima.repositories.CidadeRepository;
 import com.rribeirolima.repositories.ClienteRepository;
 import com.rribeirolima.repositories.EnderecoRepository;
 import com.rribeirolima.repositories.EstadoRepository;
+import com.rribeirolima.repositories.ItemPedidoRepository;
 import com.rribeirolima.repositories.PedidoRepository;
 import com.rribeirolima.repositories.ProdutoRepository;
 
@@ -46,6 +48,8 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 	private EnderecoRepository enderecoRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ImplementandoModeloConceitualApplication.class, args);
@@ -121,7 +125,19 @@ public class ImplementandoModeloConceitualApplication implements CommandLineRunn
 
 		// Salvando pedido e pagamento
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
-
+		
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, 1, 2000.00, 0.00);
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, 2, 80.00, 0.00);
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		
+		ItemPedido ip3 = new ItemPedido(ped2, prod2, 2, 800.00, 100.00);
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }
