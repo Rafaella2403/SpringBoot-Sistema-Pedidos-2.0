@@ -32,5 +32,12 @@ public class CategoriaService {
 		categoria.setId(null);
 		return categoriaRepository.save(categoria);
 	}
+
+	//O método save vale tanto para atualizar quanto para inserir a diferença é que no momento que o objeto esta valendo nulo ele entender que é para inserir
+	public Categoria update(Categoria categoria) {
+		//Validando se o ID informado existe, caso não exista vai ser lançado uma exceção para o usuário
+		find(categoria.getId());
+		return categoriaRepository.save(categoria);
+	}
 	
 }

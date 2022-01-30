@@ -29,7 +29,7 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//Criando método para receber uma caregotia no formato json e inserir ela no banco de dados
+	//Criando método para receber uma caregotia no formato json e inserir ela no banco de dados "POST"
 	@RequestMapping(method = RequestMethod.POST)
 	//A anotação @RequestBody faz a variável ser reconhecida como json
 	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
@@ -42,6 +42,14 @@ public class CategoriaResources {
 				.toUri();
 		return ResponseEntity.created(uri).build();
 		 
+	}
+	
+	//Criando método para atualizar dados no banco de dados "PUT"
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id) {
+		categoria.setId(id);
+		categoria = service.update(categoria);
+		return ResponseEntity.noContent().build();
 	}
 	
 }
