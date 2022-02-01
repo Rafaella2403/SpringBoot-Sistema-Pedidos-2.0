@@ -22,7 +22,7 @@ public class CategoriaResources {
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
 		Categoria obj = service.find(id);
 		
@@ -49,6 +49,15 @@ public class CategoriaResources {
 	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id) {
 		categoria.setId(id);
 		categoria = service.update(categoria);
+		//Aplicando boas práticas - Quando é atualizado um recurso o código para informar que deu certo é o 204
+		return ResponseEntity.noContent().build();
+	}
+	
+	//Criando método para deletar dados do banco "DELETE"
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		//Aplicando boas práticas - Quando é deletado um recurso o código para informar que deu certo é o 204
 		return ResponseEntity.noContent().build();
 	}
 	

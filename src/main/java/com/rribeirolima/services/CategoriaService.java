@@ -39,5 +39,12 @@ public class CategoriaService {
 		find(categoria.getId());
 		return categoriaRepository.save(categoria);
 	}
+
+	//Criando método para deletar dados do banco "DELETE"
+	public void delete(Integer id) {
+		//Validando se o ID informado existe, caso não exista vai ser lançado uma exceção para o usuário
+		find(id);
+		categoriaRepository.deleteById(id);
+	}
 	
 }
