@@ -1,5 +1,6 @@
 package com.rribeirolima.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,11 @@ public class CategoriaService {
 		catch (DataIntegrityViolationException e) {
 			throw new com.rribeirolima.services.exceptions.DataIntegrityViolationException("Não é possível deletar categorias que possui vículos com produto!");
 		}
+	}
+
+	//Criando um método para listar todas as categorias
+	public List<Categoria> findAll() {
+		return categoriaRepository.findAll();
 	}
 	
 }
