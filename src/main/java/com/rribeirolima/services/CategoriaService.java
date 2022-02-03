@@ -3,11 +3,12 @@ package com.rribeirolima.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import com.rribeirolima.domain.Categoria;
 import com.rribeirolima.repositories.CategoriaRepository;
 import com.rribeirolima.services.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class CategoriaService {
@@ -44,7 +45,13 @@ public class CategoriaService {
 	public void delete(Integer id) {
 		//Validando se o ID informado existe, caso não exista vai ser lançado uma exceção para o usuário
 		find(id);
-		categoriaRepository.deleteById(id);
+		//Criando uma exception personalizada caso seja solicitado o delet para um id que tem vincluo
+		try {
+			categoriaRepository.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new com.rribeirolima.services.exceptions.DataIntegrityViolationException("Não é possível deletar categorias que possui vículos com produto!");
+		}
 	}
 	
 }
