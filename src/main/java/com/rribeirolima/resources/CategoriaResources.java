@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -75,5 +77,23 @@ public class CategoriaResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	//Criando um método para fazer a busca das categorias páginas
+	@RequestMapping(value="/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
+			//Anotação para tornar opcionais os parametros
+			@RequestParam(value="page", defaultValue = "0") Integer page, 
+			//A quantidade de linhas é interessante mostrar 24 por que ele é multiplo de 2, 3 e 4. Com isso va iser mais fácil deixar o layout responsivo
+			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
+			//A direção pode ser ASC - Ascendente ou DESC - Descendente
+			@RequestParam(value="direction", defaultValue = "ASC") String direction
+	) {
+		
+		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		//Criando uma lista DTO com apenas os dados necessários
+		Page<CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
+		
+		return ResponseEntity.ok().body(listDTO);
+	}
 	
 }

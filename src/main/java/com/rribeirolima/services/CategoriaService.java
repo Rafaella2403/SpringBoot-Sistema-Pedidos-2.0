@@ -5,7 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+
 import com.rribeirolima.domain.Categoria;
 import com.rribeirolima.repositories.CategoriaRepository;
 import com.rribeirolima.services.exceptions.ObjectNotFoundException;
@@ -58,6 +62,12 @@ public class CategoriaService {
 	//Criando um método para listar todas as categorias
 	public List<Categoria> findAll() {
 		return categoriaRepository.findAll();
+	}
+	
+	//Criando um método para retornar somente as categorias necessárias por páginas
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return categoriaRepository.findAll(pageRequest);
 	}
 	
 }
